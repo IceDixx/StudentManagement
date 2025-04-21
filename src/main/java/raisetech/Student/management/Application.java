@@ -24,7 +24,7 @@ public class Application {
 		return student;
 	}
 	@PostMapping("/Student")
-	public String addStudentInfo(String name , 	Integer age){
+	public String addStudentInfo(String name , Integer age){
 		student.put(name,age);
 		return "got it~";
 	}
