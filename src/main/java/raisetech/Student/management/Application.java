@@ -1,7 +1,6 @@
 package raisetech.Student.management;
 
 import java.util.Date;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,6 +11,8 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import raisetech.Student.management.data.Student;
+import raisetech.Student.management.repository.StudentRepository;
 
 @SpringBootApplication
 @RestController
@@ -44,42 +45,31 @@ public class Application {
         + "Years";
   }
 
-  @GetMapping("/StudentCourse")
-  public String searchCourse(@RequestParam String Course_name) {
-    System.out.println("Out printing studentInfo");
-    Student student = repository.searchCourse(Course_name);
-    return student.getId() + " " + student.getName() + " " + student.getCoursesId()
-        + student.getCourseName() + " ";
-  }
-
-  @GetMapping("/students")
-  public List<Student> getAllStudents() {
-    return repository.getAllStudents();
-  }
 
   @GetMapping("/CourseID")
-  public String searchCourseID(@RequestParam int course_id) {
+  public String searchCourseID(@RequestParam int courseId) {
     System.out.println("Out printing studentInfo");
-    Student student = repository.searchCourseID(course_id);
+    Student student = repository.searchCourseID(courseId);
     return student.getId() + " " + student.getName() + " " + student.getCoursesId()
-        + student.getCourseName() + " ";
+        + student.getCoursesName() + " ";
   }
 
   //学生を更新//
   @PostMapping("/Student")
-  public void registerStudent(int id, String name, int age, String email, String address,
-      String nickname, String gender) {
+  public void registerStudent(@RequestParam String name,
+      @RequestParam int age, @RequestParam String email, @RequestParam String address,
+      @RequestParam String nickname, @RequestParam String gender) {
     System.out.println("Updating StudentInfo");
-    repository.registerStudent(id, name, age, email, address, nickname, gender);
+    repository.registerStudent(name, age, email, address, nickname, gender);
   }
 
   //授業を追加//
   @PostMapping("/Student_courses")
-  public void registerStudentCourses(@RequestParam int student_id,
-      @RequestParam String course_name,
-      @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date start_date,
-      @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date end_date) {
-    repository.registerStudentCourses(student_id, course_name, start_date, end_date);
+  public void registerStudentCourses(@RequestParam(required = false) Integer studentId,
+      @RequestParam String courseName,
+      @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+      @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate) {
+    repository.registerStudentCourses(studentId, courseName, startDate, endDate);
   }
 
 
@@ -90,15 +80,15 @@ public class Application {
   }
 
   //IDで学生を消す//
-  @DeleteMapping("/Student")
+  @DeleteMapping("/DeleteStudent")
   public void deleteStudent(@RequestParam int id) {
     repository.deleteStudent(id);
   }
 
   //名前で授業を消す//
   @DeleteMapping("/DeleteCourse")
-  public void deleteCourse(@RequestParam String course_name) {
-    repository.deleteCourse(course_name);
+  public void deleteCourse(@RequestParam String courseName) {
+    repository.deleteCourse(courseName);
   }
 
 }
