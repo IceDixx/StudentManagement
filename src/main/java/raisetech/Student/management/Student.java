@@ -1,9 +1,13 @@
 package raisetech.Student.management;
 
 import java.util.Date;
+import lombok.Getter;
+import lombok.Setter;
 
 public class Student {
 
+  @Getter
+  @Setter
   private String name;
   private int age;
   private String email;

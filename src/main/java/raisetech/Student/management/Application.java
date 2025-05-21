@@ -52,9 +52,10 @@ public class Application {
         + student.getCourse_name() + " ";
   }
 
-  @GetMapping("/students")
-  public List<Student> getAllStudents() {
-    return repository.getAllStudents();
+  //全ての学生//
+  @GetMapping("/ALL")
+  public List<Student> getAllStudents(String name) {
+    return repository.getAllStudents(name);
   }
 
   @GetMapping("/CourseID")
@@ -67,10 +68,10 @@ public class Application {
 
   //学生を更新//
   @PostMapping("/Student")
-  public void registerStudent(int id, String name, int age, String email, String address,
+  public void registerStudent(String name, int age, String email, String address,
       String nickname, String gender) {
     System.out.println("Updating StudentInfo");
-    repository.registerStudent(id, name, age, email, address, nickname, gender);
+    repository.registerStudent(name, age, email, address, nickname, gender);
   }
 
   //授業を追加//
