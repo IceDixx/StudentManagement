@@ -7,62 +7,62 @@ public class Student {
   private String name;
   private int age;
   private String email;
-  private String nickname;
+  private String NickName;
   private String address;
   private int id;
   private String gender;
-  private int courses_id;
-  private int student_id;
-  private String course_name;
-  private Date start_date;
-  private Date end_date;
+  private int CoursesId;
+  private int StudentId;
+  private String CoursesName;
+  private Date StartDate;
+  private Date EndDate;
 
-  public int getCourses_id() {
-    return courses_id;
+  public int getCoursesId() {
+    return CoursesId;
   }
 
-  public void setCourses_id(int courses_id) {
-    this.courses_id = courses_id;
+  public void setCoursesId(int CoursesId) {
+    this.CoursesId = CoursesId;
   }
 
-  public int getStudent_id() {
-    return student_id;
+  public int getStudentId() {
+    return StudentId;
   }
 
-  public void setStudent_id(int student_id) {
-    this.student_id = student_id;
+  public void setStudentId(int StudentId) {
+    this.StudentId = StudentId;
   }
 
-  public String getCourse_name() {
-    return course_name;
+  public String getCourseName() {
+    return CoursesName;
   }
 
-  public void setCourse_name(String course_name) {
-    this.course_name = course_name;
+  public void setCoursesName(String CoursesName) {
+    this.CoursesName = CoursesName;
   }
 
-  public Date getStart_date() {
-    return start_date;
+  public Date getStartDate() {
+    return StartDate;
   }
 
-  public void setStart_date(Date start_date) {
-    this.start_date = start_date;
+  public void setStartDate(Date StartDate) {
+    this.StartDate = StartDate;
   }
 
-  public Date getEnd_date() {
-    return end_date;
+  public Date getEndDate() {
+    return EndDate;
   }
 
-  public void setEnd_date(Date end_date) {
-    this.end_date = end_date;
+  public void setEndDate(Date EndDate) {
+    this.EndDate = EndDate;
   }
 
-  public String getNickname() {
-    return nickname;
+  public String getNickName() {
+    return NickName;
   }
 
-  public void setNickname(String nickname) {
-    this.nickname = nickname;
+  public void setNickName(String NickName) {
+    this.NickName = NickName;
   }
 
   public String getAddress() {

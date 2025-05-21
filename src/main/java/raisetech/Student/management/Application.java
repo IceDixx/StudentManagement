@@ -29,7 +29,7 @@ public class Application {
   public String studentInfo(@RequestParam String name) {
     Student student = repository.searchByName(name);
     System.out.println("Searching by Student name");
-    return student.getId() + " " + student.getCourses_id() + student.getName() + " "
+    return student.getId() + " " + student.getCoursesId() + student.getName() + " "
         + student.getAge()
         + "Years";
   }
@@ -39,7 +39,7 @@ public class Application {
   public String searchById(@RequestParam int id) {
     Student student = repository.searchById(id);
     System.out.println("Searching Student by StudentID");
-    return student.getId() + " " + student.getCourses_id() + student.getName() + " "
+    return student.getId() + " " + student.getCoursesId() + student.getName() + " "
         + student.getAge()
         + "Years";
   }
@@ -48,8 +48,8 @@ public class Application {
   public String searchCourse(@RequestParam String Course_name) {
     System.out.println("Out printing studentInfo");
     Student student = repository.searchCourse(Course_name);
-    return student.getId() + " " + student.getName() + " " + student.getCourses_id()
-        + student.getCourse_name() + " ";
+    return student.getId() + " " + student.getName() + " " + student.getCoursesId()
+        + student.getCourseName() + " ";
   }
 
   @GetMapping("/students")
@@ -61,8 +61,8 @@ public class Application {
   public String searchCourseID(@RequestParam int course_id) {
     System.out.println("Out printing studentInfo");
     Student student = repository.searchCourseID(course_id);
-    return student.getId() + " " + student.getName() + " " + student.getCourses_id()
-        + student.getCourse_name() + " ";
+    return student.getId() + " " + student.getName() + " " + student.getCoursesId()
+        + student.getCourseName() + " ";
   }
 
   //学生を更新//
