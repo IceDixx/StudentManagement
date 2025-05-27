@@ -64,7 +64,7 @@ public class Application {
   }
 
   //授業を追加//
-  @PostMapping("/Student_courses")
+  @PostMapping("/studentCourses")
   public void registerStudentCourses(@RequestParam(required = false) Integer studentId,
       @RequestParam String courseName,
       @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
