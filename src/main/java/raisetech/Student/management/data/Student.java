@@ -13,12 +13,14 @@ public class Student {
   private String email;
   private String nickname;
   private String address;
-  private int id;
+  private String id;
   private String gender;
   private int coursesId;
-  private int StudentId;
+
   private String coursesName;
   private Date startDate;
   private Date endDate;
+  private String remark;
+  private boolean isDeleted;
 
 }
