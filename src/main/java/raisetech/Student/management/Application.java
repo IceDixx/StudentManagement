@@ -26,7 +26,7 @@ public class Application {
   }
 
   //名前で学生を探します//
-  @GetMapping("/Student/byName")
+  @GetMapping("/student/byName")
   public String studentInfo(@RequestParam String name) {
     Student student = repository.searchByName(name);
     System.out.println("Searching by Student name");
@@ -36,7 +36,7 @@ public class Application {
   }
 
   //IDで学生を探します　名前ダブルかもしれないため//
-  @GetMapping("/Student/byID")
+  @GetMapping("/student/byID")
   public String searchById(@RequestParam int id) {
     Student student = repository.searchById(id);
     System.out.println("Searching Student by StudentID");
@@ -46,7 +46,7 @@ public class Application {
   }
 
 
-  @GetMapping("/CourseID")
+  @GetMapping("/courseID")
   public String searchCourseID(@RequestParam int courseId) {
     System.out.println("Out printing studentInfo");
     Student student = repository.searchCourseID(courseId);
@@ -55,7 +55,7 @@ public class Application {
   }
 
   //学生を更新//
-  @PostMapping("/Student")
+  @PostMapping("/student")
   public void registerStudent(@RequestParam String name,
       @RequestParam int age, @RequestParam String email, @RequestParam String address,
       @RequestParam String nickname, @RequestParam String gender) {
@@ -72,21 +72,21 @@ public class Application {
     repository.registerStudentCourses(studentId, courseName, startDate, endDate);
   }
 
-
+  //
   //学生が受けてる授業を更新//
-  @PatchMapping("/StudentUpdate")
+  @PatchMapping("/studentUpdate")
   public void updateStudent(int id, String name) {
     repository.updateStudent(id, name);
   }
 
   //IDで学生を消す//
-  @DeleteMapping("/DeleteStudent")
+  @DeleteMapping("/deleteStudent")
   public void deleteStudent(@RequestParam int id) {
     repository.deleteStudent(id);
   }
 
   //名前で授業を消す//
-  @DeleteMapping("/DeleteCourse")
+  @DeleteMapping("/deleteCourse")
   public void deleteCourse(@RequestParam String courseName) {
     repository.deleteCourse(courseName);
   }
