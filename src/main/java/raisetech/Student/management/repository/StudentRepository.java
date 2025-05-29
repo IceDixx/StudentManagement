@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import raisetech.Student.management.data.Student;
-import raisetech.Student.management.data.studentCourses;
+import raisetech.Student.management.data.StudentCourses;
 
 @Mapper
 public interface StudentRepository {
@@ -17,17 +17,21 @@ public interface StudentRepository {
   @Select("SELECT * FROM student WHERE name = #{name}")
   Student searchByName(String name);
 
-  @Select("SELECT * FROM student WHERE age > #{age}")
+  @Select("SELECT * FROM student WHERE age => #{age}")
   List<Student> getYearsStudent(@Param("age") int age);
 
   @Select("SELECT * FROM student_courses WHERE course_name = #{CourseName}")
-  List<studentCourses> getSelectCourse(@Param("CourseName") String CourseName);
+  List<StudentCourses> getSelectCourse(@Param("CourseName") String CourseName);
 
   @Select("SELECT * FROM student")
   List<Student> getAllStudents();
 
   @Select("SELECT * FROM student_courses")
-  List<studentCourses> getstudentCourses();
+  List<StudentCourses> getStudentCourses();
+
+  //fake delete
+  @Update("UPDATE student SET is_deleted = true WHERE id = #{id}")
+  void vacantStudent(@Param("id") String id);
 
   @Select("SELECT * FROM student WHERE id = #{id}")
   Student searchById(int id);
