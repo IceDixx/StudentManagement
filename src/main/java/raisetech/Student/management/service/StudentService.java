@@ -25,6 +25,26 @@ public class StudentService {
 
   }
 
+  //学生を更新//
+  public void registerStudent(Student student) {
+    repository.registerStudent(student.getName(),
+        student.getNickname(),
+        student.getEmail(),
+        student.getAddress(),
+        student.getAge(),
+        student.getGender(),
+        student.getRemark());
+  }
+
+  //受講を更新//
+  public void registerStudentCourses(StudentCourses studentCourses) {
+    repository.registerStudentCourses(
+        studentCourses.getStudentId(),
+        studentCourses.getCourseName(),
+        studentCourses.getStartDate(),
+        studentCourses.getEndDate()
+    );
+  }
 
   public void vacantStudent(String id) {
     repository.vacantStudent(id);
