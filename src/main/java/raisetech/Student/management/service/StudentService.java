@@ -1,10 +1,13 @@
 package raisetech.Student.management.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import raisetech.Student.management.data.Student;
-import raisetech.Student.management.data.StudentCourses;
+import raisetech.Student.management.data.StudentsCourses;
+import raisetech.Student.management.domain.StudentDetail;
 import raisetech.Student.management.repository.StudentRepository;
 
 @Service
@@ -22,44 +25,51 @@ public class StudentService {
   public List<Student> getAllStudents() {
 
     return repository.getAllStudents();
-
   }
 
-  //学生を更新//
-  public void registerStudent(Student student) {
-    repository.registerStudent(student.getName(),
-        student.getNickname(),
-        student.getEmail(),
-        student.getAddress(),
-        student.getAge(),
-        student.getGender(),
-        student.getRemark());
-  }
-
-  //受講を更新//
-  public void registerStudentCourses(StudentCourses studentCourses) {
-    repository.registerStudentCourses(
-        studentCourses.getStudentId(),
-        studentCourses.getCourseName(),
-        studentCourses.getStartDate(),
-        studentCourses.getEndDate()
-    );
-  }
-
-  public void vacantStudent(String id) {
-    repository.vacantStudent(id);
-  }
-
-  public List<Student> getYearsStudent(int age) {
-    return repository.getYearsStudent(age);
-  }
-
-  public List<StudentCourses> getStudentCourses() {
-
+  public List<StudentsCourses> getStudentCourses() {
     return repository.getStudentCourses();
   }
 
-  public List<StudentCourses> getSelectCourses(String CourseName) {
-    return repository.getSelectCourse(CourseName);
+  public StudentDetail searchStudent(int id) {
+    Student student = repository.searchById(id);
+    List<StudentsCourses> studentsCourses = repository.searchStudentCourses(student.getId());
+    StudentDetail studentDetail = new StudentDetail();
+    studentDetail.setStudent(student);
+    studentDetail.setStudentsCourses(studentsCourses);
+    return studentDetail;
+  }
+
+  public void vacantStudent(int id) {
+    repository.vacantStudent(id);
+  }
+
+  public Student searchById(int id) {
+    return repository.searchById(id);
+  }
+
+  public void updateStudent(Student student) {
+    repository.updateStudent(student);
+  }
+
+  //学生を登録//
+  @Transactional
+  public void registerStudent(StudentDetail studentDetail) {
+    repository.registerStudent(studentDetail.getStudent());
+    for (StudentsCourses studentsCourses : studentDetail.getStudentsCourses()) {
+      studentsCourses.setStudentId(studentDetail.getStudent().getId());
+      studentsCourses.setStartDate(LocalDate.now());
+      studentsCourses.setEndDate(LocalDate.now().plusYears(1));
+      repository.registerStudentCourses(studentsCourses);
+    }
+  }
+
+  @Transactional
+  public void updateStudent(StudentDetail studentDetail) {
+    repository.updateStudent(studentDetail.getStudent());
+    for (StudentsCourses studentsCourses : studentDetail.getStudentsCourses()) {
+      studentsCourses.setStudentId(studentDetail.getStudent().getId());
+      repository.updateStudentCourses(studentsCourses);
+    }
   }
 }

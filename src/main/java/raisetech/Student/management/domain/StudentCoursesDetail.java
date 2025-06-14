@@ -2,11 +2,11 @@ package raisetech.Student.management.domain;
 
 import java.util.List;
 import raisetech.Student.management.data.Student;
-import raisetech.Student.management.data.StudentCourses;
+import raisetech.Student.management.data.StudentsCourses;
 
 public class StudentCoursesDetail {
 
   private Student student;
-  private List<StudentCourses> studentsCourses;
+  private List<StudentsCourses> studentsCourses;
 
 }

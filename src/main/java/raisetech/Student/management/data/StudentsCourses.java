@@ -6,9 +6,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class StudentCourses {
+public class StudentsCourses {
 
-  private int id;
+  private int courseId;
   private int studentId;
   private String courseName;
   private LocalDate startDate;

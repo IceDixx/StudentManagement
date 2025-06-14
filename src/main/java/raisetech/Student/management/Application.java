@@ -1,14 +1,10 @@
 package raisetech.Student.management;
 
-import java.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import raisetech.Student.management.data.Student;
@@ -56,21 +52,8 @@ public class Application {
 
 //was//
 
-  //授業を追加//
-  @PostMapping("/studentCourses")
-  public void registerStudentCourses(@RequestParam(required = false) int studentId,
-      @RequestParam String courseName,
-      @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
-      @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) {
-    repository.registerStudentCourses(studentId, courseName, startDate, endDate);
-  }
-
   //
   //学生が受けてる授業を更新//
-  @PatchMapping("/studentUpdate")
-  public void updateStudent(int id, String name) {
-    repository.updateStudent(id, name);
-  }
 
   //IDで学生を消す//
   @DeleteMapping("/deleteStudent")
