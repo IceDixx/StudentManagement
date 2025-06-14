@@ -13,7 +13,7 @@ public class Student {
   private String email;
   private String nickname;
   private String address;
-  private String id;
+  private int id;
   private String gender;
   private int coursesId;
 

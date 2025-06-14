@@ -6,7 +6,7 @@
 <body>
 <h1>コース登録</h1>
 
-<form th:action="@{/registerStudentCourses}" th:object="${studentCourses}" method="post">
+<form th:action="@{/registerStudentCourses}" th:object="${studentsCourses}" method="post">
   <div>
     <label for="student_id">学生ID:</label>
     <input type="number" id="student_id" th:field="*{studentId}" required/>
