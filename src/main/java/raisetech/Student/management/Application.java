@@ -1,6 +1,6 @@
 package raisetech.Student.management;
 
-import java.util.Date;
+import java.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -54,21 +54,14 @@ public class Application {
         + student.getCoursesName() + " ";
   }
 
-  //学生を更新//
-  @PostMapping("/student")
-  public void registerStudent(@RequestParam String name,
-      @RequestParam int age, @RequestParam String email, @RequestParam String address,
-      @RequestParam String nickname, @RequestParam String gender) {
-    System.out.println("Updating StudentInfo");
-    repository.registerStudent(name, age, email, address, nickname, gender);
-  }
+//was//
 
   //授業を追加//
   @PostMapping("/studentCourses")
-  public void registerStudentCourses(@RequestParam(required = false) Integer studentId,
+  public void registerStudentCourses(@RequestParam(required = false) int studentId,
       @RequestParam String courseName,
-      @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
-      @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate) {
+      @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+      @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) {
     repository.registerStudentCourses(studentId, courseName, startDate, endDate);
   }
 
