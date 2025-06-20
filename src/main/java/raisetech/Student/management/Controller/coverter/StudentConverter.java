@@ -14,16 +14,18 @@ public class StudentConverter {
   public List<StudentDetail> convertStudentDetails(List<Student> students,
       List<StudentsCourses> studentsCourse) {
     List<StudentDetail> studentDetails = new ArrayList<>();
-    students.forEach(student -> {
-      StudentDetail studentDetail = new StudentDetail();
-      studentDetail.setStudent(student);
+    students.stream()
+        .filter(student -> !student.isDeleted())
+        .forEach(student -> {
+          StudentDetail studentDetail = new StudentDetail();
+          studentDetail.setStudent(student);
 
-      List<StudentsCourses> covertStudentsCourse = studentsCourse.stream()
-          .filter(courses -> courses.getCourseId() == student.getId())
-          .collect(Collectors.toList());
-      studentDetail.setStudentsCourses(covertStudentsCourse);
-      studentDetails.add(studentDetail);
-    });
+          List<StudentsCourses> covertStudentsCourse = studentsCourse.stream()
+              .filter(courses -> courses.getCourseId() == student.getId())
+              .collect(Collectors.toList());
+          studentDetail.setStudentsCourses(covertStudentsCourse);
+          studentDetails.add(studentDetail);
+        });
     return studentDetails;
   }
 }
