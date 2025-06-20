@@ -14,7 +14,7 @@ import raisetech.Student.management.data.StudentsCourses;
 @Mapper
 public interface StudentRepository {
 
-  @Select("SELECT * FROM student")
+  @Select("SELECT * FROM student WHERE is_deleted = false")
   List<Student> getAllStudents();
 
   @Select("SELECT * FROM student WHERE id = #{id}")
