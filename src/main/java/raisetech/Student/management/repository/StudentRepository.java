@@ -28,6 +28,7 @@ public interface StudentRepository {
    * @return　受講生
    */
 
+  Student FindId(int id);
 
   Student searchById(int id);
 
