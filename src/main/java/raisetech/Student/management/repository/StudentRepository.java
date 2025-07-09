@@ -2,14 +2,11 @@ package raisetech.Student.management.repository;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
 import raisetech.Student.management.data.Student;
-import raisetech.Student.management.data.StudentsCourses;
+import raisetech.Student.management.data.StudentCourse;
 
 /**
  * 受講生テーブルと受講生コース情報テーブルと紐づくrepository
@@ -22,7 +19,6 @@ public interface StudentRepository {
    *
    * @return受講生一覧（全件）
    */
-  @Select("SELECT * FROM student WHERE is_deleted = false")
   List<Student> getAllStudents();
 
   /**
@@ -32,7 +28,7 @@ public interface StudentRepository {
    * @return　受講生
    */
 
-  @Select("SELECT * FROM student WHERE id = #{id}")
+
   Student searchById(int id);
 
   /**
@@ -40,8 +36,7 @@ public interface StudentRepository {
    *
    * @return　受講生のコース情報（全件）
    */
-  @Select("SELECT * FROM student_courses")
-  List<StudentsCourses> getStudentCourses();
+  List<StudentCourse> getStudentCourses();
 
   /**
    * 受講生IDに紐づく受講コース情報を検索します
@@ -49,12 +44,10 @@ public interface StudentRepository {
    * @param studentId 　受講ID
    * @return　受講生IDに紐づく受講コース情報
    */
-  @Select("SELECT * FROM student_courses WHERE student_id = #{studentId}")
-  List<StudentsCourses> searchStudentCourses(int studentId);
+  List<StudentCourse> searchStudentCourse(int studentId);
 
 
   //fake delete
-  @Update("UPDATE student SET is_deleted = true WHERE id = #{id}")
   void vacantStudent(@Param("id") int id);
 
 
@@ -67,23 +60,35 @@ public interface StudentRepository {
   @Select("SELECT * FROM student WHERE name = #{name}")
   Student searchByName(String name);
 
-  //newStudent//
-  @Insert("INSERT INTO student (name, nickname, email, address, age, gender, remark) VALUES (#{name}, #{nickname}, #{email}, #{address}, #{age}, #{gender},#{remark})")
-  @Options(useGeneratedKeys = true, keyProperty = "id")
+  /**
+   * 受講生を新規登録します IDに関しては自動採番を行う
+   *
+   * @param student 　受講生情報
+   */
   void registerStudent(Student student);
 
-  //newStudentCourses//
-  @Insert("INSERT INTO student_courses (student_id, course_name, start_date, end_date) " +
-      "VALUES (#{studentId}, #{courseName}, #{startDate}, #{endDate})")
-  @Options(useGeneratedKeys = true, keyProperty = "courseId")
-  void registerStudentCourses(StudentsCourses studentsCourses);
+  /**
+   * 受講生コース情報を新規登録します。IDに関しては自動採番を行う
+   *
+   * @param studentsCourse 　受講生コース情報
+   */
 
+  void registerStudentCourses(StudentCourse studentsCourse);
 
-  @Update("UPDATE student SET name=#{name}, age=#{age}, email=#{email}, nickname=#{nickname}, address=#{address}, gender=#{gender}, remark=#{remark}, is_deleted=#{isDeleted} WHERE id =#{id}")
+  /**
+   * 受講生を更新します
+   *
+   * @param student 　受講生
+   */
+
   void updateStudent(Student student);
 
-  @Update("UPDATE  student_courses SET course_name = #{courseName} WHERE course_ID=#{courseId}")
-  void updateStudentCourses(StudentsCourses studentsCourses);
+  /**
+   * 受講コース名を更新します。
+   *
+   * @param studentsCourses 　受講コース情報
+   */
+  void updateStudentCourse(StudentCourse studentsCourses);
 
 
   @Delete("DELETE FROM student WHERE id = #{id}")
