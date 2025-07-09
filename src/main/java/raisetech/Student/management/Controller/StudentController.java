@@ -1,7 +1,9 @@
 package raisetech.Student.management.Controller;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Pattern;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import raisetech.Student.management.Controller.coverter.StudentConverter;
 import raisetech.Student.management.domain.StudentDetail;
+import raisetech.Student.management.exception.TestException;
 import raisetech.Student.management.service.StudentService;
 
 /**
@@ -44,7 +47,7 @@ public class StudentController {
 
   @GetMapping("/studentList")
   public List<StudentDetail> getAllStudents() {
-    return service.getStudentCourses();
+    return getAllStudents();
   }
 
   @PostMapping("/voidStudent")
@@ -61,7 +64,8 @@ public class StudentController {
    * @return
    */
   @PostMapping("/registerStudent")
-  public ResponseEntity<StudentDetail> registerStudent(@RequestBody StudentDetail studentDetail) {
+  public ResponseEntity<StudentDetail> registerStudent(
+      @RequestBody @Valid StudentDetail studentDetail) {
     StudentDetail responseStudentDetail = service.registerStudent(studentDetail);
     return ResponseEntity.ok(responseStudentDetail);
 
@@ -74,7 +78,8 @@ public class StudentController {
    * @return 受講生ID
    */
   @GetMapping("/student/{id}")
-  public StudentDetail searchById(@PathVariable @Min(1) @Max(999) int id) {
+  public StudentDetail searchById(
+      @PathVariable @Min(1) @Max(999) @Pattern(regexp = "^\\d+$") int id) {
     return service.searchStudent(id);
 
   }
@@ -93,13 +98,21 @@ public class StudentController {
    * @return　実行結果
    */
   @PutMapping("/updateStudent")
-  public ResponseEntity<String> updateStudent(@RequestBody StudentDetail studentDetail) {
+  public ResponseEntity<String> updateStudent(@RequestBody @Valid StudentDetail studentDetail) {
     service.updateStudent(studentDetail);
     return ResponseEntity.ok("GOOD");
   }
 
+  @GetMapping("/Find/{id}")
+  public StudentDetail FindId(
+      @PathVariable int id) throws TestException {
+    throw new TestException("Please give me number");
 
+  }
 }
+
+
+
 
 
 

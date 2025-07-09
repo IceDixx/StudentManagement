@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="raisetech.Student.management.repository.StudentRepository">
+
+  <!--受講生の全件検索を行います。-->
+  <select id="getAllStudents" resultType="raisetech.Student.management.data.Student">
+    SELECT * FROM student WHERE is_deleted = false
+  </select>
+  <select id="FindID" resultType="raisetech.Student.management.data.Student">
+    SELECT * FROM student WHERE id = #{id}
+  </select>
+  <!--受講生の検索を行います。-->
+  <select id="searchById" resultType="raisetech.Student.management.data.Student">
+    SELECT * FROM student WHERE id = #{id}
+  </select>
+  <!--受講生のコース情報の全件検索を行います。-->
+  <select id="getStudentCourses" resultType="raisetech.Student.management.data.StudentCourse">
+    SELECT * FROM student_courses
+  </select>
+  <!--受講生IDに紐づく受講コース情報を検索します。-->
+  <select id="searchStudentCourse" resultType="raisetech.Student.management.data.StudentCourse">
+    SELECT * FROM student_courses WHERE student_id = #{studentId}
+  </select>
+  <!--fake delete-->
+  <update id="vacantStudent" parameterType="int">
+    UPDATE student SET is_deleted = true WHERE id = #{id}
+  </update>
+  <!--  受講生を更新します-->
+  <update id="updateStudent" parameterType="raisetech.Student.management.data.Student">
+    UPDATE student SET name=#{name}, age=#{age}, email=#{email}, nickname=#{nickname},
+    address=#{address}, gender=#{gender}, remark=#{remark}, is_deleted=#{isDeleted} WHERE id =#{id}
+  </update>
+  <!--  受講コース名を更新します-->
+  <update id="updateStudentCourse" parameterType="raisetech.Student.management.data.StudentCourse">
+    UPDATE student_courses SET course_name = #{courseName} WHERE course_id=#{courseId}
+  </update>
+  <!--受講生を新規登録します IDに関しては自動採番を行う-->
+  <insert id="registerStudent"
+    parameterType="raisetech.Student.management.data.Student"
+    useGeneratedKeys="true" keyProperty="id"
+  >
+    INSERT INTO student (name, nickname, email, address, age, gender, remark)
+    VALUES (#{name}, #{nickname}, #{email}, #{address}, #{age}, #{gender},#{remark})
+
+  </insert>
+  <!--  受講生コース情報を新規登録します。IDに関しては自動採番を行う-->
+  <insert id="registerStudentCourses"
+    parameterType="raisetech.Student.management.data.StudentCourse"
+    useGeneratedKeys="true" keyProperty="courseId"
+  >
+    INSERT INTO student_courses (student_id, course_name, start_date, end_date)
+    VALUES (#{studentId}, #{courseName}, #{startDate}, #{endDate})
+
+  </insert>
+
+
+</mapper>
