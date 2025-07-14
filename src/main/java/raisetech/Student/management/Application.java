@@ -1,5 +1,7 @@
 package raisetech.Student.management;
 
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.info.Info;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import raisetech.Student.management.data.Student;
 import raisetech.Student.management.repository.StudentRepository;
 
+@OpenAPIDefinition(info = @Info(title = "StudentManagementSystem"))
 @SpringBootApplication
 @RestController
 public class Application {

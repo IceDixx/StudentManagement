@@ -1,18 +1,21 @@
 package raisetech.Student.management.data;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import java.util.Date;
 import lombok.Getter;
 import lombok.Setter;
 
+@Schema(description = "Student")
 @Getter
 @Setter
 public class Student {
 
   @NotBlank
   private String name;
-  @NotBlank
+  @NotNull
   private int age;
   @NotBlank
   @Email
@@ -21,21 +24,21 @@ public class Student {
   private String nickname;
   @NotBlank
   private String address;
-  @NotBlank
+
   private int id;
   @NotBlank
   private String gender;
-  @NotBlank
+
   private int coursesId;
   @NotBlank
   private String coursesName;
-  @NotBlank
+  @NotNull
   private Date startDate;
-  @NotBlank
+  @NotNull
   private Date endDate;
   @NotBlank
   private String remark;
-  @NotBlank
+
   private boolean isDeleted;
 
 }

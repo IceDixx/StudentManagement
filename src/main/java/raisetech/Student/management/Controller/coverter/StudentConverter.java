@@ -1,5 +1,6 @@
 package raisetech.Student.management.Controller.coverter;
 
+import io.swagger.v3.oas.annotations.Operation;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -11,6 +12,7 @@ import raisetech.Student.management.domain.StudentDetail;
 /**
  * 受講生詳細を受講生や受講生コース情報、もしくはその逆の変換を行うコンバーターです。
  */
+
 @Component
 public class StudentConverter {
 
@@ -21,6 +23,7 @@ public class StudentConverter {
    * @param studentCourseList 　受講コース情報のリスト
    * @return　受講生詳細情報のリスト
    */
+  @Operation(summary = "Converter Student&Courses", description = "受講生に紐づく受講コース情報をマッピングする 受講コース情報は受講生に対して複数存在するのでループを回して受講生詳細情報を組立る")
   public List<StudentDetail> convertStudentDetails(List<Student> studentList,
       List<StudentCourse> studentCourseList) {
     List<StudentDetail> studentDetails = new ArrayList<>();
