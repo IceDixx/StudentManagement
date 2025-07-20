@@ -43,9 +43,9 @@ class StudentServiceTest {
     List<StudentCourse> studentCourseList = new ArrayList<>();
     when(repository.search()).thenReturn(studentList);
     when(repository.searchStudentCourseList()).thenReturn(studentCourseList);
-    List<StudentDetail> actual = sut.getStudentCourses();
+    List<StudentDetail> actual = sut.searchStudentList();
     verify(repository, times(1)).search();
-    verify(repository, times(1)).searchCourse();
+    verify(repository, times(1)).searchStudentCourseList();
     verify(converter, times(1)).convertStudentDetails(studentList, studentCourseList);
   }
 

@@ -50,7 +50,7 @@ public class StudentController {
   @Operation(summary = "Search", description = "SearchFromStudent")
   @GetMapping("/studentList")
   public List<StudentDetail> getAllStudents() {
-    return service.getStudentCourses();
+    return service.searchStudentList();
   }
 
   @Operation(summary = "VoidStudent", description = "VoidStudent")
