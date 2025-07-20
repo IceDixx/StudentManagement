@@ -8,6 +8,7 @@ import static org.mockito.Mockito.when;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -47,6 +48,20 @@ class StudentServiceTest {
     verify(repository, times(1)).search();
     verify(repository, times(1)).searchStudentCourseList();
     verify(converter, times(1)).convertStudentDetails(studentList, studentCourseList);
+  }
+
+  @Test
+  void 受講生詳細検索です() {
+    int id = 999;
+    Student student = new Student();
+    student.setId(id);
+    when(repository.searchById(id)).thenReturn(student);
+    when(repository.searchStudentCourseList()).thenReturn(new ArrayList<>());
+    StudentDetail expected = new StudentDetail(student, new ArrayList<>());
+    StudentDetail actual = sut.searchStudent(id);
+    verify(repository, times(1)).searchById(id);
+    verify(repository, times(1)).searchStudentCourseList();
+    Assertions.assertEquals(expected.getStudent().getId(), actual.getStudent().getId());
   }
 
   @Test
