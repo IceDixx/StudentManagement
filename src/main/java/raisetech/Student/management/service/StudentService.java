@@ -1,6 +1,6 @@
 package raisetech.Student.management.service;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,14 +38,14 @@ public class StudentService {
 
   public List<StudentDetail> searchStudentList() {
     List<Student> studentList = repository.search();
-    List<StudentCourse> studentCourseList = repository.searchStudentCourseList();
+    List<StudentCourse> studentCourseList = repository.searchStudentCourses();
 
     return converter.convertStudentDetails(studentList, studentCourseList);
   }
 
   public List<StudentDetail> getStudentCourses() {
     List<Student> studentList = repository.search();
-    List<StudentCourse> studentsCoursesList = repository.getStudentCourses();
+    List<StudentCourse> studentsCoursesList = repository.searchStudentCourses();
     return converter.convertStudentDetails(studentList, studentsCoursesList);
 
   }
@@ -59,7 +59,7 @@ public class StudentService {
   @Transactional
   public StudentDetail searchStudent(int id) {
     Student student = repository.searchById(id);
-    List<StudentCourse> studentCourse = repository.searchStudentCourseList();
+    List<StudentCourse> studentCourse = repository.searchStudentCourseList(id);
     return new StudentDetail(student, studentCourse);
   }
 
@@ -98,8 +98,8 @@ public class StudentService {
    * @param studentsCourses 　受講生コース情報
    * @param student         　受講生
    */
-  public static void initStudentsCourse(StudentCourse studentsCourses, Student student) {
-    LocalDate now = LocalDate.now();
+  public void initStudentsCourse(StudentCourse studentsCourses, Student student) {
+    LocalDateTime now = LocalDateTime.now();
     studentsCourses.setStudentId(student.getId());
     studentsCourses.setStartDate(now);
     studentsCourses.setEndDate(now.plusYears(1));

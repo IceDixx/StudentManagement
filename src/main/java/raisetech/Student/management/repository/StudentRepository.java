@@ -37,7 +37,7 @@ public interface StudentRepository {
    *
    * @return　受講生のコース情報（全件）
    */
-  List<StudentCourse> getStudentCourses();
+  List<StudentCourse> searchStudentCourses();
 
   /**
    * 受講生IDに紐づく受講コース情報を検索します
@@ -45,7 +45,7 @@ public interface StudentRepository {
    * @param studentId 　受講ID
    * @return　受講生IDに紐づく受講コース情報
    */
-  List<StudentCourse> searchStudentCourseList();
+  List<StudentCourse> searchStudentCourseList(int studentId);
 
 
   //fake delete

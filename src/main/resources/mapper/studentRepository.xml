@@ -4,10 +4,10 @@
 <mapper namespace="raisetech.Student.management.repository.StudentRepository">
 
   <!--受講生の全件検索を行います。-->
-  <select id="getAllStudents" resultType="raisetech.Student.management.data.Student">
+  <select id="search" resultType="raisetech.Student.management.data.Student">
     SELECT * FROM student WHERE is_deleted = false
   </select>
-  <select id="FindID" resultType="raisetech.Student.management.data.Student">
+  <select id="findID" resultType="raisetech.Student.management.data.Student">
     SELECT * FROM student WHERE id = #{id}
   </select>
   <!--受講生の検索を行います。-->
@@ -15,11 +15,11 @@
     SELECT * FROM student WHERE id = #{id}
   </select>
   <!--受講生のコース情報の全件検索を行います。-->
-  <select id="getStudentCourses" resultType="raisetech.Student.management.data.StudentCourse">
+  <select id="searchStudentCourses" resultType="raisetech.Student.management.data.StudentCourse">
     SELECT * FROM student_courses
   </select>
   <!--受講生IDに紐づく受講コース情報を検索します。-->
-  <select id="searchStudentCourse" resultType="raisetech.Student.management.data.StudentCourse">
+  <select id="searchStudentCourseList" resultType="raisetech.Student.management.data.StudentCourse">
     SELECT * FROM student_courses WHERE student_id = #{studentId}
   </select>
   <!--fake delete-->
