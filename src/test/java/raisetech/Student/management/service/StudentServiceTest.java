@@ -52,7 +52,7 @@ class StudentServiceTest {
   }
 
   @Test
-  void 受講生詳細検索です() {
+  void 受講生IDを指定して詳細情報を取得ができること() {
     int id = 1;
     Student student = new Student();
     student.setId(id);
@@ -70,7 +70,7 @@ class StudentServiceTest {
   }
 
   @Test
-  void 受講生と受講コース情報をそれぞれ更新します() {
+  void 受講生情報と受講コース情報を一緒に更新ができること() {
     StudentService sut = new StudentService(repository, converter);
     Student student = new Student();
     student.setId(1);
@@ -93,7 +93,7 @@ class StudentServiceTest {
   }
 
   @Test
-  void 受講生詳細の登録を行います() {
+  void 受講生詳細の登録ができること() {
     StudentService sut = new StudentService(repository, converter);
     Student student = new Student();
     student.setId(1);
@@ -115,7 +115,7 @@ class StudentServiceTest {
   }
 
   @Test
-  void 受講生登録します() {
+  void コースに受講生IDと開始_終了日の設定ができること() {
     int id = 999;
     Student student = new Student();
     student.setId(id);
@@ -130,7 +130,7 @@ class StudentServiceTest {
   }
 
   @Test
-  void 受講生コース情報を登録する際の初期情報を設定() {
+  void 受講生コース情報の初期値が正しくの設定ができること() {
     StudentService sut = new StudentService(repository, converter);
 
     Student student = new Student();
