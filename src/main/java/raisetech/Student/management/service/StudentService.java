@@ -1,6 +1,6 @@
 package raisetech.Student.management.service;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,14 +36,16 @@ public class StudentService {
    * @return　受講生詳細一覧（全件）
    */
 
-  public List<Student> getAllStudents() {
+  public List<StudentDetail> searchStudentList() {
+    List<Student> studentList = repository.search();
+    List<StudentCourse> studentCourseList = repository.searchStudentCourses();
 
-    return repository.getAllStudents();
+    return converter.convertStudentDetails(studentList, studentCourseList);
   }
 
   public List<StudentDetail> getStudentCourses() {
-    List<Student> studentList = repository.getAllStudents();
-    List<StudentCourse> studentsCoursesList = repository.getStudentCourses();
+    List<Student> studentList = repository.search();
+    List<StudentCourse> studentsCoursesList = repository.searchStudentCourses();
     return converter.convertStudentDetails(studentList, studentsCoursesList);
 
   }
@@ -57,7 +59,7 @@ public class StudentService {
   @Transactional
   public StudentDetail searchStudent(int id) {
     Student student = repository.searchById(id);
-    List<StudentCourse> studentCourse = repository.searchStudentCourse(student.getId());
+    List<StudentCourse> studentCourse = repository.searchStudentCourseList(id);
     return new StudentDetail(student, studentCourse);
   }
 
@@ -74,7 +76,7 @@ public class StudentService {
   }
 
   /**
-   * 受講生詳細の登録を行います。 受講生と受講生コース情報を個別に登録し、受講生コース情報には受講生情報を紐づける値や日付（コース開始日、終了日を設定
+   * 受講生詳細の登録を行います。 受講生と受講生コース情報を個別に登録し、受講生コース情報には受講生情報を紐づける値や日付（コース開始日、終了日を設定)
    *
    * @param studentDetail
    * @return　登録情報を付与した受講生詳細
@@ -96,8 +98,8 @@ public class StudentService {
    * @param studentsCourses 　受講生コース情報
    * @param student         　受講生
    */
-  private static void initStudentsCourse(StudentCourse studentsCourses, Student student) {
-    LocalDate now = LocalDate.now();
+  public void initStudentsCourse(StudentCourse studentsCourses, Student student) {
+    LocalDateTime now = LocalDateTime.now();
     studentsCourses.setStudentId(student.getId());
     studentsCourses.setStartDate(now);
     studentsCourses.setEndDate(now.plusYears(1));

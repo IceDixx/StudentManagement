@@ -19,7 +19,7 @@ public interface StudentRepository {
    *
    * @return受講生一覧（全件）
    */
-  List<Student> getAllStudents();
+  List<Student> search();
 
   /**
    * 受講生の検索を行います。
@@ -37,7 +37,7 @@ public interface StudentRepository {
    *
    * @return　受講生のコース情報（全件）
    */
-  List<StudentCourse> getStudentCourses();
+  List<StudentCourse> searchStudentCourses();
 
   /**
    * 受講生IDに紐づく受講コース情報を検索します
@@ -45,7 +45,7 @@ public interface StudentRepository {
    * @param studentId 　受講ID
    * @return　受講生IDに紐づく受講コース情報
    */
-  List<StudentCourse> searchStudentCourse(int studentId);
+  List<StudentCourse> searchStudentCourseList(int studentId);
 
 
   //fake delete
@@ -53,7 +53,7 @@ public interface StudentRepository {
 
 
   @Select("SELECT * FROM student_courses WHERE course_id = #{course_id}")
-  Student searchCourse(String courseName);
+  Student searchCourse();
 
   @Select("SELECT * FROM student_courses WHERE course_id = #{course_id}")
   Student searchCourseID(int courseId);

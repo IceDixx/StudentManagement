@@ -4,7 +4,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.Pattern;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -50,7 +49,7 @@ public class StudentController {
   @Operation(summary = "Search", description = "SearchFromStudent")
   @GetMapping("/studentList")
   public List<StudentDetail> getAllStudents() {
-    return service.getStudentCourses();
+    return service.searchStudentList();
   }
 
   @Operation(summary = "VoidStudent", description = "VoidStudent")
@@ -85,7 +84,7 @@ public class StudentController {
   @Operation(summary = "SearchStudent&Course", description = "SearchFromStudent&Courses")
   @GetMapping("/student/{id}")
   public StudentDetail searchById(
-      @PathVariable @Min(1) @Max(999) @Pattern(regexp = "^\\d+$") int id) {
+      @PathVariable @Min(1) @Max(999) int id) {
     return service.searchStudent(id);
 
   }
