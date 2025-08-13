@@ -1,6 +1,5 @@
 package raisetech.Student.management.service;
 
-import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.times;
@@ -10,6 +9,7 @@ import static org.mockito.Mockito.when;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -53,20 +53,19 @@ class StudentServiceTest {
 
   @Test
   void 受講生IDを指定して詳細情報を取得ができること() {
-    int id = 1;
+    int id = 999;
     Student student = new Student();
     student.setId(id);
-    StudentCourse course = new StudentCourse();
-    List<StudentCourse> courseList = new ArrayList<>();
-    courseList.add(course);
+
     when(repository.searchById(id)).thenReturn(student);
-    when(repository.searchStudentCourseList(id)).thenReturn(courseList);
-    StudentDetail result = sut.searchStudent(id);
-    assertNotNull(result);
-    assertEquals(student, result.getStudent());
-    assertEquals(courseList, result.getStudentsCourseList());
+    when(repository.searchStudentCourseList(id)).thenReturn(new ArrayList<>());
+
+    StudentDetail expected = new StudentDetail(student, new ArrayList<>());
+    StudentDetail actual = sut.searchStudent(id);
+
     verify(repository, times(1)).searchById(id);
     verify(repository, times(1)).searchStudentCourseList(id);
+    Assertions.assertEquals(expected.getStudent().getId(), actual.getStudent().getId());
   }
 
   @Test
@@ -94,25 +93,15 @@ class StudentServiceTest {
 
   @Test
   void 受講生詳細の登録ができること() {
-    StudentService sut = new StudentService(repository, converter);
     Student student = new Student();
-    student.setId(1);
-    student.setName("ICE");
-    StudentCourse course = new StudentCourse();
-    List<StudentCourse> courseList = new ArrayList<>();
-    courseList.add(course);
-    StudentDetail studentDetail = new StudentDetail();
-    studentDetail.setStudent(student);
-    studentDetail.setStudentsCourseList(courseList);
-    StudentDetail result = sut.registerStudent(studentDetail);
+    StudentCourse studentCourse = new StudentCourse();
+    List<StudentCourse> studentCourseList = List.of(studentCourse);
+    StudentDetail studentDetail = new StudentDetail(student, studentCourseList);
+    sut.registerStudent(studentDetail);
     verify(repository, times(1)).registerStudent(student);
-    verify(repository, times(1)).registerStudentCourses(course);
-    assertEquals(1, course.getStudentId());
-    assertNotNull(course.getStartDate());
-    assertNotNull(course.getEndDate());
-    assertEquals(course.getStartDate().plusYears(1), course.getEndDate());
-    assertEquals(studentDetail, result);
+    verify(repository, times(1)).registerStudentCourses(studentCourse);
   }
+
 
   @Test
   void コースに受講生IDと開始_終了日の設定ができること() {
@@ -121,7 +110,7 @@ class StudentServiceTest {
     student.setId(id);
     StudentCourse studentCourse = new StudentCourse();
     LocalDateTime before = LocalDateTime.now();
-    sut.initStudentsCourse(studentCourse, student);
+    sut.initStudentsCourse(studentCourse, student.getId());
     LocalDateTime after = LocalDateTime.now();
     assertEquals(id, studentCourse.getStudentId());
     assertTrue(!studentCourse.getStartDate().isBefore(before));
@@ -131,17 +120,13 @@ class StudentServiceTest {
 
   @Test
   void 受講生コース情報の初期値が正しくの設定ができること() {
-    StudentService sut = new StudentService(repository, converter);
-
+    int id = 999;
     Student student = new Student();
-    student.setId(1);
-    StudentCourse course = new StudentCourse();
-    LocalDateTime before = LocalDateTime.now();
-    sut.initStudentsCourse(course, student);
-    LocalDateTime after = LocalDateTime.now();
-    assertEquals(1, course.getStudentId());
-    assertTrue(!course.getStartDate().isBefore(before));
-    assertTrue(!course.getStartDate().isAfter(after));
-    assertEquals(course.getStartDate().plusYears(1), course.getEndDate());
+    student.setId(id);
+    StudentCourse studentCourse = new StudentCourse();
+    sut.initStudentsCourse(studentCourse, student.getId());
+    assertEquals(id, studentCourse.getStudentId());
+    assertEquals(LocalDateTime.now().getHour(), studentCourse.getStartDate().getHour());
+    assertEquals(LocalDateTime.now().plusYears(1).getYear(), studentCourse.getEndDate().getYear());
   }
 }

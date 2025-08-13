@@ -2,6 +2,7 @@ package raisetech.Student.management.data;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import java.util.Date;
@@ -15,28 +16,36 @@ public class Student {
 
   @NotBlank
   private String name;
+
   @NotNull
   private int age;
+
+
+  @Email(message = "onlyEmail")
   @NotBlank
-  @Email
   private String email;
+
   @NotBlank
   private String nickname;
+
   @NotBlank
   private String address;
 
+  @NotNull(message = "NoAvailableNumber")
+  @Min(value = 1, message = "ID must be greater than 0")
   private int id;
+
   @NotBlank
   private String gender;
 
   private int coursesId;
-  @NotBlank
+
   private String coursesName;
-  @NotNull
+
   private Date startDate;
-  @NotNull
+
   private Date endDate;
-  @NotBlank
+
   private String remark;
 
   private boolean isDeleted;
