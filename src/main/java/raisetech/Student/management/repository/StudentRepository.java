@@ -24,7 +24,7 @@ public interface StudentRepository {
   /**
    * 受講生の検索を行います。
    *
-   * @param id 　受講生ID
+   * @param id 受講生ID
    * @return　受講生
    */
 
@@ -40,9 +40,9 @@ public interface StudentRepository {
   List<StudentCourse> searchStudentCourses();
 
   /**
-   * 受講生IDに紐づく受講コース情報を検索します
+   * //   * 受講生IDに紐づく受講コース情報を検索します
    *
-   * @param studentId 　受講ID
+   * @param studentId 受講ID
    * @return　受講生IDに紐づく受講コース情報
    */
   List<StudentCourse> searchStudentCourseList(int studentId);
@@ -56,7 +56,7 @@ public interface StudentRepository {
   Student searchCourse();
 
   @Select("SELECT * FROM student_courses WHERE course_id = #{course_id}")
-  Student searchCourseID(int courseId);
+  StudentCourse searchCourseID(int courseId);
 
   @Select("SELECT * FROM student WHERE name = #{name}")
   Student searchByName(String name);
@@ -64,14 +64,14 @@ public interface StudentRepository {
   /**
    * 受講生を新規登録します IDに関しては自動採番を行う
    *
-   * @param student 　受講生情報
+   * @param student 受講生情報
    */
   void registerStudent(Student student);
 
   /**
    * 受講生コース情報を新規登録します。IDに関しては自動採番を行う
    *
-   * @param studentsCourse 　受講生コース情報
+   * @param studentsCourse 受講生コース情報
    */
 
   void registerStudentCourses(StudentCourse studentsCourse);
@@ -79,7 +79,7 @@ public interface StudentRepository {
   /**
    * 受講生を更新します
    *
-   * @param student 　受講生
+   * @param student 受講生
    */
 
   void updateStudent(Student student);
@@ -87,7 +87,7 @@ public interface StudentRepository {
   /**
    * 受講コース名を更新します。
    *
-   * @param studentsCourses 　受講コース情報
+   * @param studentsCourses 受講コース情報
    */
   void updateStudentCourse(StudentCourse studentsCourses);
 
