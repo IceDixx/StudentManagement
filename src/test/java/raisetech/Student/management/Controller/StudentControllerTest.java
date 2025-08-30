@@ -14,6 +14,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
+import java.time.LocalDateTime;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,12 +29,16 @@ import raisetech.Student.management.service.StudentService;
 @WebMvcTest(StudentController.class)
 class StudentControllerTest {
 
+
   @Autowired
   MockMvc mockMvc;
 
   @MockBean
   private StudentService service;
   private Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
+
+  LocalDateTime startDate = LocalDateTime.now();
+  LocalDateTime endDate = LocalDateTime.now().plusYears(1);
 
   @Test
   void 受講生一覧の検索実行されて＿空のリストが返ってきます() throws Exception {
@@ -44,14 +49,16 @@ class StudentControllerTest {
 
   @Test
   void 受講生詳細の受講生で適性な値を入力した時に入力チェックに異常が発生しないこと() {
-    Student student = new Student();
-    student.setId(999);
-    student.setName("TEST");
-    student.setEmail("test@test.com");
-    student.setAge(12);
-    student.setGender("Male");
-    student.setAddress("Japan");
-    student.setNickname("T");
+    Student student = new Student(
+        "TEST",
+        12,
+        "TEST@TEST.com",
+        "T",
+        "Japan",
+        -1,
+        "T",
+
+        1, "JAVA", startDate, endDate, "", false);
     Set<ConstraintViolation<Student>> violations = validator.validate(student);
 
     assertThat(violations.size()).isEqualTo(0);
@@ -59,18 +66,20 @@ class StudentControllerTest {
 
   @Test
   void 受講生詳細の受講生でIDに数字以外を用いた時に入力チェックに掛かること() {
-    Student student = new Student();
-    student.setId(-1);
-    student.setName("TEST");
-    student.setEmail("TEST@TEST.com");
-    student.setAge(12);
-    student.setGender("Male");
-    student.setAddress("Japan");
-    student.setNickname("T");
+    Student student = new Student(
+        "TEST",
+        12,
+        "TEST@TEST.com",
+        "T",
+        "Japan",
+        -1,
+        "T",
+
+        1, "JAVA", startDate, endDate, "", false);
     Set<ConstraintViolation<Student>> violations = validator.validate(student);
 
     assertThat(violations.size()).isEqualTo(1);
-    assertThat(violations).extracting("message").containsOnly("NoAvailableNumber");
+    assertThat(violations).extracting("message").containsOnly("ID must be greater than 0");
   }
 
   @Test

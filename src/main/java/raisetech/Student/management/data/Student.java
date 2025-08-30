@@ -5,10 +5,14 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import java.util.Date;
+import java.time.LocalDateTime;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Schema(description = "Student")
 @Getter
 @Setter
@@ -31,7 +35,7 @@ public class Student {
   @NotBlank
   private String address;
 
-  @NotNull(message = "NoAvailableNumber")
+
   @Min(value = 1, message = "ID must be greater than 0")
   private int id;
 
@@ -42,9 +46,9 @@ public class Student {
 
   private String coursesName;
 
-  private Date startDate;
+  private LocalDateTime startDate;
 
-  private Date endDate;
+  private LocalDateTime endDate;
 
   private String remark;
 
