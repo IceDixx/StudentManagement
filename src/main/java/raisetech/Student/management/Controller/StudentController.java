@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import raisetech.Student.management.Controller.coverter.StudentConverter;
+import raisetech.Student.management.data.CourseStatus;
 import raisetech.Student.management.domain.StudentDetail;
 import raisetech.Student.management.exception.TestException;
 import raisetech.Student.management.service.StudentService;
@@ -51,6 +52,15 @@ public class StudentController {
   public List<StudentDetail> getAllStudents() {
     return service.searchStudentList();
   }
+
+  @GetMapping("/student/search")
+  public List<StudentDetail> searchStudents(
+      @RequestParam(required = false) String name,
+      @RequestParam(required = false) String email,
+      @RequestParam(required = false) Integer age) {
+    return service.searchStudentsByCondition(name, email, age);
+  }
+
 
   @Operation(summary = "VoidStudent", description = "VoidStudent")
   @PostMapping("/voidStudent")
@@ -100,7 +110,7 @@ public class StudentController {
   /**
    * 受講生詳細の更新を行います。 キャンセルフラグの更新もここで行います。（論理削除）
    *
-   * @param studentDetail 　受講生詳細
+   * @param studentDetail 受講生詳細
    * @return　実行結果
    */
   @Operation(summary = "UpdateStudent", description = "UpdateStudent論理削除もいける")
@@ -116,6 +126,19 @@ public class StudentController {
       @PathVariable int id) throws TestException {
     throw new TestException("Please give me number");
 
+  }
+
+  @GetMapping("/courseStatuses")
+  public List<CourseStatus> getCourseStatuses() {
+    return service.getAllCourseStatuses();
+  }
+
+  @PutMapping("/course/{courseId}/status")
+  public ResponseEntity<String> updateCourseStatus(
+      @PathVariable int courseId,
+      @RequestParam String status) {
+    service.updateCourseStatus(courseId, status);
+    return ResponseEntity.ok("Status up date to" + status);
   }
 }
 

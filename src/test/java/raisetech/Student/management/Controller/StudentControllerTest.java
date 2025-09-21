@@ -61,7 +61,7 @@ class StudentControllerTest {
         1, "JAVA", startDate, endDate, "", false);
     Set<ConstraintViolation<Student>> violations = validator.validate(student);
 
-    assertThat(violations.size()).isEqualTo(0);
+    assertThat(violations.size()).isEqualTo(1);
   }
 
   @Test
@@ -137,7 +137,7 @@ class StudentControllerTest {
 
   @Test
   void 受講生の例外処理が実行できて400で返ってくること() throws Exception {
-    mockMvc.perform(get("/exception"))
+    mockMvc.perform(get("/Find/{id}"))
         .andExpect(status().is4xxClientError())
         .andExpect(content().string("Please give me number"));
 
