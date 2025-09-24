@@ -16,7 +16,7 @@
   </select>
   <!--受講生のコース情報の全件検索を行います。-->
   <select id="searchStudentCourses" resultType="raisetech.Student.management.data.StudentCourse">
-    SELECT * FROM student_courses WHERE id = #{id}
+    SELECT * FROM student_courses WHERE course_id = #{courseId}
   </select>
   <!--受講生IDに紐づく受講コース情報を検索します。-->
   <select id="searchStudentCourseList" resultType="raisetech.Student.management.data.StudentCourse">
@@ -54,6 +54,13 @@
     VALUES (#{studentId}, #{courseName}, #{startDate}, #{endDate})
 
   </insert>
+  <!-- コースステータス情報を新規登録します。IDは自動採番 -->
+  <insert id="registerCourseStatus"
+    parameterType="raisetech.Student.management.data.CourseStatus"
+    useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO course_status (course_id, status)
+    VALUES (#{courseId}, #{status})
+  </insert>
   <select id="searchByCondition" parameterType="map"
     resultType="raisetech.Student.management.data.Student">
     SELECT * FROM student
@@ -64,7 +71,13 @@
   </select>
   <select id="searchCourseStatuses"
     resultType="raisetech.Student.management.data.CourseStatus">
-    SELECT id, course_id, status
+    SELECT course_id, status
+    FROM course_status
+  </select>
+  <!--単独な受講コースステータスを受講生IDで取得し受講コースステータスを取ります-->
+  <select id="searchCourseStatusesList"
+    resultType="raisetech.Student.management.data.CourseStatus">
+    SELECT course_id, status
     FROM course_status
   </select>
   <!--受講コースステータスを更新します-->

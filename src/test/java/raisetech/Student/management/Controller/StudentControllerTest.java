@@ -137,7 +137,7 @@ class StudentControllerTest {
 
   @Test
   void 受講生の例外処理が実行できて400で返ってくること() throws Exception {
-    mockMvc.perform(get("/Find/{id}"))
+    mockMvc.perform(get("/find/{id}"))
         .andExpect(status().is4xxClientError())
         .andExpect(content().string("Please give me number"));
 
