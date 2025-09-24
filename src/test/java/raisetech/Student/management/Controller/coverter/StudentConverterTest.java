@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import raisetech.Student.management.data.CourseStatus;
 import raisetech.Student.management.data.Student;
 import raisetech.Student.management.data.StudentCourse;
 import raisetech.Student.management.domain.StudentDetail;
@@ -29,11 +30,13 @@ class StudentConverterTest {
     studentCourse.setCourseName("JAVA");
     studentCourse.setStartDate(LocalDateTime.now());
     studentCourse.setEndDate(LocalDateTime.now().plusYears(1));
+    CourseStatus courseStatus = new CourseStatus();
 
     List<Student> studentList = List.of(student);
     List<StudentCourse> studentCourseList = List.of(studentCourse);
-
-    List<StudentDetail> actual = sut.convertStudentDetails(studentList, studentCourseList);
+    List<CourseStatus> courseStatusesList = List.of(courseStatus);
+    List<StudentDetail> actual = sut.convertStudentDetails(studentList, studentCourseList,
+        courseStatusesList);
 
     assertThat(actual.get(0).getStudent()).isEqualTo(student);
     assertThat(actual.get(0).getStudentsCourseList()).isEqualTo(studentCourseList);
@@ -51,9 +54,14 @@ class StudentConverterTest {
     studentCourse.setStartDate(LocalDateTime.now());
     studentCourse.setEndDate(LocalDateTime.now().plusYears(1));
 
+    CourseStatus courseStatus = new CourseStatus();
+    courseStatus.setStatus("仮申込");
+
     List<Student> studentList = List.of(student);
     List<StudentCourse> studentCourseList = List.of(studentCourse);
-    List<StudentDetail> actual = sut.convertStudentDetails(studentList, studentCourseList);
+    List<CourseStatus> courseStatuses = List.of(courseStatus);
+    List<StudentDetail> actual = sut.convertStudentDetails(studentList, studentCourseList,
+        courseStatuses);
     assertThat(actual.get(0).getStudent()).isEqualTo(student);
     assertThat(actual.get(0).getStudentsCourseList().isEmpty());
   }

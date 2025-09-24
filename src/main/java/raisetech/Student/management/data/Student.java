@@ -2,7 +2,6 @@ package raisetech.Student.management.data;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
@@ -36,7 +35,6 @@ public class Student {
   private String address;
 
 
-  @Min(value = 1, message = "ID must be greater than 0")
   private int id;
 
   @NotBlank

@@ -2,6 +2,8 @@ package raisetech.Student.management.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -9,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import raisetech.Student.management.data.CourseStatus;
 import raisetech.Student.management.data.Student;
 import raisetech.Student.management.data.StudentCourse;
 
@@ -181,4 +184,14 @@ class StudentRepositoryTest {
     assertThatThrownBy(() -> sut.registerStudentCourses(studentCourse))
         .isInstanceOf(DataIntegrityViolationException.class);
   }
+
+  @Test
+  void searchCourseStatuses_正しい結果を返すこと() {
+    List<CourseStatus> result = sut.searchCourseStatuses();
+    assertNotNull(result);
+    assertEquals(2, result.size());
+    assertEquals("受講中", result.get(0).getStatus());
+    assertEquals("完了", result.get(1).getStatus());
+  }
+ 
 }

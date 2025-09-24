@@ -17,3 +17,10 @@
   end_date DATE,
   FOREIGN KEY (student_id) REFERENCES student(id)
   );
+  CREATE TABLE IF NOT EXISTS course_status (
+      course_id INT PRIMARY KEY,
+      status ENUM('仮申込', '本申込', '受講中', '受講終了') NOT NULL,
+      FOREIGN KEY (course_id) REFERENCES student_courses(course_id)
+      ON DELETE CASCADE
+      ON UPDATE CASCADE
+  );

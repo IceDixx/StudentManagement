@@ -42,6 +42,7 @@
     <label for="remark">備考:</label>
     <textarea id="remark" th:field="*{student.remark}"></textarea>
   </div>
+
   <div th:each="course, stat : *{studentsCourses}">
     <label for="courseId"
            th:for="studentCourse.__${stat.index}__.courseId">受講コースID</label>

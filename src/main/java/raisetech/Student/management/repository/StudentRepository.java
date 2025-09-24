@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import raisetech.Student.management.data.CourseStatus;
 import raisetech.Student.management.data.Student;
 import raisetech.Student.management.data.StudentCourse;
 
@@ -48,19 +49,6 @@ public interface StudentRepository {
   List<StudentCourse> searchStudentCourseList(int studentId);
 
 
-  //fake delete
-  void vacantStudent(@Param("id") int id);
-
-
-  @Select("SELECT * FROM student_courses WHERE course_id = #{course_id}")
-  Student searchCourse();
-
-  @Select("SELECT * FROM student_courses WHERE course_id = #{course_id}")
-  StudentCourse searchCourseID(int courseId);
-
-  @Select("SELECT * FROM student WHERE name = #{name}")
-  Student searchByName(String name);
-
   /**
    * 受講生を新規登録します IDに関しては自動採番を行う
    *
@@ -75,6 +63,48 @@ public interface StudentRepository {
    */
 
   void registerStudentCourses(StudentCourse studentsCourse);
+
+  /**
+   * 受講コースステータスをリストで全部返す
+   *
+   * @return
+   */
+  List<CourseStatus> searchCourseStatuses();
+
+  /**
+   * 受講コースステータスを初期化する
+   *
+   * @param courseStatus
+   */
+  void registerCourseStatus(CourseStatus courseStatus);
+  
+
+  /**
+   * 受講コースステータスをアップデートする
+   *
+   * @param courseId 更新対象のコースID
+   * @param status   新しいステータス（仮申込・本申込・受講中・受講終了）
+   */
+  void updateCourseStatus(int courseID, String status);
+
+  /**
+   * 受講コースステータスをリストで全部返す
+   *
+   * @return
+   */
+  List<CourseStatus> searchCourseStatusesList(int id);
+
+  /**
+   * 条件指定で受講生を検索する
+   *
+   * @param name
+   * @param email
+   * @param age
+   * @return
+   */
+  List<Student> searchByCondition(@Param("name") String name,
+      @Param("email") String email,
+      @Param("age") Integer age);
 
   /**
    * 受講生を更新します
@@ -98,4 +128,17 @@ public interface StudentRepository {
 
   @Delete("DELETE FROM student_courses WHERE course_name = #{course_name}")
   void deleteCourse(String courseName);
+
+  //fake delete
+  void vacantStudent(@Param("id") int id);
+
+
+  @Select("SELECT * FROM student_courses WHERE course_id = #{course_id}")
+  Student searchCourse();
+
+  @Select("SELECT * FROM student_courses WHERE course_id = #{course_id}")
+  StudentCourse searchCourseID(int courseId);
+
+  @Select("SELECT * FROM student WHERE name = #{name}")
+  Student searchByName(String name);
 }
